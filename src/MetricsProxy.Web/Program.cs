@@ -20,6 +20,7 @@ namespace MetricsProxy.Web
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.ConfigureLogging(logging => logging.AddConsole());
                     webBuilder.UseStartup<Startup>();
                 });
     }

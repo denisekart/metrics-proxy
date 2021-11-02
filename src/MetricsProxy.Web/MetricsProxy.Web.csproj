@@ -5,7 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\DataSink.Databox\DataSink.Databox.csproj" />
+    <ProjectReference Include="..\DataSource.Github\DataSource.Github.csproj" />
+    <ProjectReference Include="..\DataSource.LinkedIn\DataSource.LinkedIn.csproj" />
+    <ProjectReference Include="..\MetricsProxy.Application\MetricsProxy.Application.csproj" />
+    <ProjectReference Include="..\MetricsProxy.Contracts\MetricsProxy.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

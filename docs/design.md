@@ -32,7 +32,7 @@ A data sink will be defined as a single interface. External actors will define i
 
 The sink will expose a property `name` which will uniquely identify the sink. 
 
-A method `commit` will commit the data that is provided in the input to the data sink.
+A method `report` will commit the data that is provided in the input to the data sink.
 
 > I'll make sure that the KPIs being reported will be globally unique (e.g. prefix kpi name with the data source name).
 
