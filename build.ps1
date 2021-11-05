@@ -68,11 +68,18 @@ Write-Verbose "Microsoft (R) .NET Core SDK version $(& $env:DOTNET_EXE --version
 $ProjectFile= "$PSScriptRoot/src/MetricsProxy.Web/MetricsProxy.Web.csproj"
 $TestProjectFile = "$PSScriptRoot/src/MetricsProxy.Tests/MetricsProxy.Tests.csproj"
 
-#ExecSafe { & $env:DOTNET_EXE build}
 if($Run){
     ExecSafe { & $env:DOTNET_EXE run --project $ProjectFile --no-build}
 }elseif ($Test) {
     ExecSafe { & $env:DOTNET_EXE test $TestProjectFile}
 }elseif ($Cover) {
-    
+    ExecSafe {if (& $env:DOTNET_EXE tool list --tool-path "$PSScriptRoot/tools" | Select-String "dotnet-reportgenerator-globaltool") {
+            Write-Host -f Yellow 'Skipping install of dotnet-reportgenerator-globaltool. It''s already installed'
+        }
+        else {
+            Invoke-Block { & $env:DOTNET_EX tool install --tool-path "$PSScriptRoot/tools" dotnet-reportgenerator-globaltool }
+        }}
+    ExecSafe { & $env:DOTNET_EXE test $TestProjectFile --results-directory "$PSScriptRoot/test-results" --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura}
+    # https://github.com/danielpalme/ReportGenerator - different types of reports
+    ExecSafe { & "$PSScriptRoot/tools/reportgenerator.exe" -reports:"$PSScriptRoot/test-results/*/coverage.cobertura.xml" -targetdir:"$PSScriptRoot/test-results" -reporttypes:"Html;TextSummary"}
 }

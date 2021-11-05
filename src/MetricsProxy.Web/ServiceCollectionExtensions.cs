@@ -1,5 +1,4 @@
 ﻿using System;
-using DataSink.Databox;
 using MetricsProxy.Application.Domain;
 using MetricsProxy.Contracts;
 using Microsoft.Extensions.Configuration;
@@ -89,10 +88,15 @@ namespace MetricsProxy.Web
             return services;
         }
 
-        public static IServiceCollection AddDataSinks(this IServiceCollection services)
+        public static IServiceCollection AddDataSinksFromAssembly<TTypeInAssembly>(this IServiceCollection services)
         {
-            services.AddSingleton<IDataSink, DataboxDataSink>();
-            //TODO: register an arbitrary data sink type
+            var assembly = typeof(TTypeInAssembly).Assembly;
+            var dataSourceTypes = assembly.GetTypes().Where(x => x.IsAssignableTo(typeof(IDataSink)));
+            foreach (var dataSourceType in dataSourceTypes
+                .Where(x => x.GetCustomAttribute(typeof(ObsoleteAttribute)) == null))
+            {
+                services.AddSingleton(typeof(IDataSink), dataSourceType);
+            }
 
             return services;
         }

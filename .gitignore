@@ -351,3 +351,6 @@ MigrationBackup/
 
 
 **/appSettings.Personal.json
+.env
+tools/**
+test-results/**

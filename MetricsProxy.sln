@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetricsProxy.Tests", "src\M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataSource.Multiple", "src\DataSource.Multiple\DataSource.Multiple.csproj", "{36BCC251-D64A-4FF5-B752-AE6BA94CE6B0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataSink.Databox", "src\DataSink.Databox\DataSink.Databox.csproj", "{5D39661E-2B27-48A1-9782-A7845E39DA23}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataSink.Multiple", "src\DataSink.Multiple\DataSink.Multiple.csproj", "{5D39661E-2B27-48A1-9782-A7845E39DA23}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Peripherals", "Peripherals", "{ADA80FB3-7C02-4AEE-8C15-8FBEAF6A42E5}"
 EndProject

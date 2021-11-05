@@ -73,7 +73,7 @@ namespace MetricsProxy.Application.Peripherals
             var errors = _context.MetricTargets.Include(x => x.Metric)
                 .Where(x => x.Status == EfReportStatus.Failure)
                 .AsEnumerable()
-                .Select(x => (new Kpi(x.Metric.Key, x.Metric.Value, x.Metric.SourceName, x.Metric.ReceivedOn), x.SinkName, x.StatusDescription))
+                .Select(x => new FailedStat(new Kpi(x.Metric.Key, x.Metric.Value, x.Metric.SourceName, x.Metric.ReceivedOn), x.SinkName, x.StatusDescription))
                 .ToList();
 
             return new(all, success, failed, distinct, errors);

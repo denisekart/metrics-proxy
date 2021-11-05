@@ -13,6 +13,6 @@ namespace MetricsProxy.Application.Peripherals.Ef
             
         }
 
-        public static string DbPath => $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}{System.IO.Path.DirectorySeparatorChar}metricsProxy.db";
+        public static string DbPath => $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.Create)}{System.IO.Path.DirectorySeparatorChar}metricsProxy.db";
     }
 }

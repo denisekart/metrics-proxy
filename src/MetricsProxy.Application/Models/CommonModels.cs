@@ -14,6 +14,8 @@ namespace MetricsProxy.Application.Models
     public record ReportedKpi(Kpi Kpi, string Sink, bool Success, string ErrorMessage);
     public record KpiToReport(Kpi Kpi, string[] Sinks);
     public record KpiModel(string SourceName, string Key, string Value, DateTime ReceivedOn, List<ReportTargetModel> Targets);
+
+    public record FailedStat(Kpi Kpi, string Sink, string Error);
     public record KpiStats(int TotalSent, int TotalSucceeded, int TotalFailed, List<Kpi> DistinctReportedKpis,
-        List<(Kpi Kpi, string Sink, string Error)> Failed);
+        List<FailedStat> Failed);
 }

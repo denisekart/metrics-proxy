@@ -49,7 +49,7 @@ namespace MetricsProxy.Application.Peripherals
             var errors = _store
                 .SelectMany(x => (x.Targets ?? Enumerable.Empty<ReportTargetModel>()).Select(t => new { target = t, model = x }))
                 .Where(x => x.target.Status == ReportStatus.Failure)
-                .Select(x => (new Kpi(x.model.Key, x.model.Value, x.model.SourceName), x.target.SinkName, x.target.StatusDescription))
+                .Select(x => new FailedStat(new Kpi(x.model.Key, x.model.Value, x.model.SourceName), x.target.SinkName, x.target.StatusDescription))
                 .ToList();
 
             return new(all, success, failed, distinct, errors);

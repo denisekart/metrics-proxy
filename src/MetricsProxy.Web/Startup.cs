@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using DataSink.Multiple;
 using DataSource.Multiple;
 using MetricsProxy.Application.Peripherals.Ef;
 using Microsoft.AspNetCore.Builder;
@@ -37,7 +38,7 @@ namespace MetricsProxy.Web
                 .AddCoreMetricsProxyServices(Configuration)
                 .AddExternalServicesConfigurationFactory()
                 .AddDataSourcesFromAssembly<GithubDataSource>()
-                .AddDataSinks();
+                .AddDataSinksFromAssembly<DataboxDataSink>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -67,7 +68,7 @@ namespace MetricsProxy.Web
                 endpoints.MapControllers();
             });
 
-            app.Run(ctx => ctx.Response.WriteAsync("Whoops, you missed an endpoint. See '/README.md' on what to do next."));
+            app.Run(ctx => ctx.Response.WriteAsync("Whoops, you missed an endpoint! <br/> See '/README.md' on what to do next. or visit the /swagger endpoint for API documentation."));
         }
     }
 }

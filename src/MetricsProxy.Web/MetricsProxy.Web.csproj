@@ -9,7 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataSink.Databox\DataSink.Databox.csproj" />
+    <ProjectReference Include="..\DataSink.Multiple\DataSink.Multiple.csproj" />
     <ProjectReference Include="..\DataSource.Multiple\DataSource.Multiple.csproj" />
     <ProjectReference Include="..\MetricsProxy.Application\MetricsProxy.Application.csproj" />
     <ProjectReference Include="..\MetricsProxy.Contracts\MetricsProxy.Contracts.csproj" />

@@ -9,6 +9,13 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - 5000:80
+      - 5050:80
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - METRICSPROXY_DataSink__Databox__Token=${DATABOX_TOKEN}
+      - METRICSPROXY_DataSink__RandomlyFailing__FailureRatePercent=100
+      - METRICSPROXY_DataSource__GitHub__AccessToken=${GITHUB_ACCESSTOKEN}
+      - METRICSPROXY_DataSource__Facebook__AppId=${FACEBOOK_APPID}
+      - METRICSPROXY_DataSource__Facebook__AppSecret=${FACEBOOK_APPSECRET}
+      - METRICSPROXY_DatabaseProvider=EfCore # InMemory | EfCore | EfCore_Reset
+      - METRICSPROXY_QueryService__IntervalInMilliseconds=60000
