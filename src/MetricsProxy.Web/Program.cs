@@ -21,8 +21,10 @@ namespace MetricsProxy.Web
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.ConfigureAppConfiguration(config =>
-                        config.AddJsonFile("appSettings.Personal.json", true)
-                        );
+                        config
+                            .AddJsonFile("appSettings.Personal.json", true)
+                            .AddEnvironmentVariables("METRICSPROXY_")
+                    );
                     webBuilder.ConfigureLogging(logging =>
                         logging.AddConsole()
                         );

@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using MetricsProxy.Application.Contracts;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -15,19 +16,18 @@ namespace MetricsProxy.Web.Services
     
     public class MetricsQueryBackgroundService : BackgroundService
     {
+        private readonly IServiceScopeFactory _scopeFactory;
         private readonly IOptions<QueryServiceOptions> _options;
-        private readonly IMetricsManagementService _metricsManagementService;
         private readonly ILogger<MetricsQueryBackgroundService> _logger;
         private readonly IBackgroundServiceTracker _tracker;
 
-        public MetricsQueryBackgroundService(
+        public MetricsQueryBackgroundService(IServiceScopeFactory scopeFactory,
             IOptions<QueryServiceOptions> options, 
-            IMetricsManagementService metricsManagementService, 
             ILogger<MetricsQueryBackgroundService> logger,
             IBackgroundServiceTracker tracker)
         {
+            _scopeFactory = scopeFactory;
             _options = options;
-            _metricsManagementService = metricsManagementService;
             _logger = logger;
             _tracker = tracker;
             _tracker.Report("Not started");
@@ -40,7 +40,11 @@ namespace MetricsProxy.Web.Services
                 _tracker.Report($"Running ({_options.Value.IntervalInMilliseconds} ms interval)");
                 try
                 {
-                    await _metricsManagementService.QueryAndReport(stoppingToken);
+                    using (var scope = _scopeFactory.CreateScope())
+                    {
+                        await scope.ServiceProvider.GetRequiredService<IMetricsManagementService>()
+                            .QueryAndReport(stoppingToken);
+                    }
                 }
                 catch (Exception e)
                 {

@@ -14,17 +14,13 @@ A periodic trigger will query all of the registered data sources for new data. A
 
 The application will expose an API endpoint for querying the current data status. When a user queries the endpoint, a JSON payload will be returned. The payload will contain the requested statistical data (to be defined later).
 
-
-
 ## Data sources
 
-A data source will be defined as a single interface (an API). External actors will create implementations of said interface. The interface will  be "registered" in the application pipeline. The data source will expose a property `name` and an operation `query` . 
+A data source will be defined as a single interface (an API). External actors will create implementations of said interface. The interface will  be "registered" in the application pipeline. The data source will expose a property `name` and an operation `query` .
 
-`name` will specify a unique identifier of a data source. 
+`name` will specify a unique identifier of a data source.
 
 `query` will trigger an operation which will result in a map of key-value pairs. a `key` will represent the KPI identifier. A `value` will represent a value for that KPI.
-
-
 
 ## Data sinks
 
@@ -61,11 +57,10 @@ Go to "Auth" tab
 Copy "Client ID" and "Client Secret"
 ```
 
-Failed!
+Failed! - IGNORING
 
 ```
 By default, your application will not have the ability to use LinkedIn's client credentials flow. Contact us to have your application granted permission to use this flow.
-
 ```
 
 
@@ -82,6 +77,19 @@ Copy "Token"
 
 
 
+### Facebook
+
+To configure a facebook integration, login to [facebook developer](developers.facebook.com).
+
+```
+Select "My Apps"
+Create an app with a "Custom" (slo: Brez) template.
+Open the app > Settings > Basic
+Copy "App ID" and "App Secret"
+```
+
+
+
 ## Data sinks
 
 ### Databox
@@ -89,6 +97,8 @@ Copy "Token"
 To configure a databox data sink, go to [databox](http://developers.databox.com/).
 
 ```
+DataManager > New Connection > Additional ways to connect > Rest API > Create Token
+Copy "Token"
 ```
 
 

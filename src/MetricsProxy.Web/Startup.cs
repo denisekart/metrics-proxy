@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using DataSource.Multiple;
+using MetricsProxy.Application.Peripherals.Ef;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -47,6 +48,15 @@ namespace MetricsProxy.Web
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MetricsProxy.Web v1"));
+            }
+
+            if (Configuration.UseEfCoreDatabase())
+            {
+                using var efScope = app.ApplicationServices.CreateScope();
+                var db = efScope.ServiceProvider.GetRequiredService<MetricsContext>();
+                if (Configuration.UseEfCoreDatabaseReset())
+                    db.Database.EnsureDeleted();
+                db.Database.EnsureCreated();
             }
 
             app.UseHttpsRedirection();

@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using MetricsProxy.Application.Contracts;
 using MetricsProxy.Application.Models;
 using MetricsProxy.Contracts;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace MetricsProxy.Application.Peripherals
 {
@@ -45,7 +47,7 @@ namespace MetricsProxy.Application.Peripherals
                 .Select(x => new Kpi(x.Key, null, x.SourceName))
                 .ToList();
             var errors = _store
-                .SelectMany(x => (x.Targets ?? Enumerable.Empty<ReportTargetModel>()).Select(t => new {target = t, model = x}))
+                .SelectMany(x => (x.Targets ?? Enumerable.Empty<ReportTargetModel>()).Select(t => new { target = t, model = x }))
                 .Where(x => x.target.Status == ReportStatus.Failure)
                 .Select(x => (new Kpi(x.model.Key, x.model.Value, x.model.SourceName), x.target.SinkName, x.target.StatusDescription))
                 .ToList();
