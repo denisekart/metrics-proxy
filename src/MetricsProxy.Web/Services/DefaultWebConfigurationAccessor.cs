@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using MetricsProxy.Contracts;
 using Microsoft.Extensions.Configuration;
 
-namespace MetricsProxy.Web
+namespace MetricsProxy.Web.Services
 {
     public class DefaultWebConfigurationAccessor<TService> : IConfigurationAccessor<TService> where TService : INamedService
     {
@@ -25,13 +20,16 @@ namespace MetricsProxy.Web
             {
                 _sectionValue = "DataSink";
             }
-
-            _sectionValue = string.Empty;
+            else
+            {
+                _sectionValue = string.Empty;
+            }
         }
-        public T Get<T>(TService instance, string path)
+        public T Get<T>(TService instance, string path) where T: class, new()
         {
-            return _configuration.GetValue<T>(string.Join(":",
-                new[] {_sectionValue, instance.Name, path}.OfType<string>()));
+            return _configuration.GetSection(
+                string.Join(":",new[] { _sectionValue, instance.Name, path }.OfType<string>()))
+                .Get<T>();
         }
     }
 }

@@ -16,4 +16,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Application\" />
+    <Folder Include="DataSource\" />
+    <Folder Include="DataSink\" />
+  </ItemGroup>
+
 </Project>

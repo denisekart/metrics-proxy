@@ -9,9 +9,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DataSink.Databox\DataSink.Databox.csproj" />
-    <ProjectReference Include="..\DataSource.Github\DataSource.Github.csproj" />
-    <ProjectReference Include="..\DataSource.LinkedIn\DataSource.LinkedIn.csproj" />
+    <ProjectReference Include="..\DataSink.Databox\DataSink.Databox.csproj" />
+    <ProjectReference Include="..\DataSource.Multiple\DataSource.Multiple.csproj" />
     <ProjectReference Include="..\MetricsProxy.Application\MetricsProxy.Application.csproj" />
     <ProjectReference Include="..\MetricsProxy.Contracts\MetricsProxy.Contracts.csproj" />
   </ItemGroup>

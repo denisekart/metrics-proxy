@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using DataSource.Multiple;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -34,7 +35,7 @@ namespace MetricsProxy.Web
             services
                 .AddCoreMetricsProxyServices(Configuration)
                 .AddExternalServicesConfigurationFactory()
-                .AddDataSources()
+                .AddDataSourcesFromAssembly<GithubDataSource>()
                 .AddDataSinks();
         }
 

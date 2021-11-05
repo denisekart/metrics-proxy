@@ -1,10 +1,15 @@
-﻿using DataSink.Databox;
-using DataSource.Github;
-using DataSource.LinkedIn;
+﻿using System;
+using DataSink.Databox;
 using MetricsProxy.Application.Domain;
 using MetricsProxy.Contracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Linq;
+using System.Reflection;
+using MetricsProxy.Application.Application;
+using MetricsProxy.Application.Contracts;
+using MetricsProxy.Application.Peripherals;
+using MetricsProxy.Web.Services;
 
 namespace MetricsProxy.Web
 {
@@ -23,6 +28,9 @@ namespace MetricsProxy.Web
             services.AddSingleton<IDataSinkReportingService, DataSinkReportingService>();
             services.AddSingleton<IKpiRepository, InMemoryKpiRepository>();
 
+            services.AddHttpClient();
+            services.AddSingleton<IBackgroundServiceTracker, DefaultBackgroundServiceTracker>();
+
             return services;
         }
         public static IServiceCollection AddExternalServicesConfigurationFactory(this IServiceCollection services)
@@ -32,11 +40,15 @@ namespace MetricsProxy.Web
             return services;
         }
 
-        public static IServiceCollection AddDataSources(this IServiceCollection services)
+        public static IServiceCollection AddDataSourcesFromAssembly<TTypeInAssembly>(this IServiceCollection services)
         {
-            services.AddSingleton<IDataSource, GithubDataSource>();
-            services.AddSingleton<IDataSource, LinkedInDataSource>();
-            //TODO: register an arbitrary data source type
+            var assembly = typeof(TTypeInAssembly).Assembly;
+            var dataSourceTypes = assembly.GetTypes().Where(x => x.IsAssignableTo(typeof(IDataSource)));
+            foreach (var dataSourceType in dataSourceTypes
+                .Where(x=>x.GetCustomAttribute(typeof(ObsoleteAttribute)) == null))
+            {
+                services.AddSingleton(typeof(IDataSource), dataSourceType);
+            }
 
             return services;
         }

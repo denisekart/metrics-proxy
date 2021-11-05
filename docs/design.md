@@ -40,7 +40,56 @@ A method `report` will commit the data that is provided in the input to the data
 
 ## The API endpoint
 
+TBD
+
+## Data sources
+
+### LinkedIn
+
+To configure a LinkedIn datasource, login to the [LinkedIn developer portal](https://developer.linkedin.com/). Select the "Create App" button and enter the following details(or similar):
+
+```
+App name: Denis Demo Dev App
+LinkedIn page: https://www.linkedin.com/company/denis-corp (or create one)
+Press > Create App
+Press > Verify
+Generate Url
+Copy Url and open in new tab (as LinkedIn page admin)
+Press > Verify
+"Denis Demo Dev App is now verified with your LinkedIn Page"
+Go to "Auth" tab
+Copy "Client ID" and "Client Secret"
+```
+
+Failed!
+
+```
+By default, your application will not have the ability to use LinkedIn's client credentials flow. Contact us to have your application granted permission to use this flow.
+
+```
 
 
-## The client side
+
+### Github
+
+To configure a github integration login to [GitHub](github.com).
+
+```
+Settings > Developer settings > Personal access tokens > Generate new token
+select permissions: 
+Copy "Token"
+```
+
+
+
+## Data sinks
+
+### Databox
+
+To configure a databox data sink, go to [databox](http://developers.databox.com/).
+
+```
+```
+
+
 

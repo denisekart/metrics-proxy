@@ -8,6 +8,6 @@ namespace MetricsProxy.Contracts
 {
     public interface IConfigurationAccessor<TService> where TService : INamedService
     {
-        T Get<T>(TService instance, string path = null);
+        T Get<T>(TService instance, string path = null) where T : class, new();
     }
 }
