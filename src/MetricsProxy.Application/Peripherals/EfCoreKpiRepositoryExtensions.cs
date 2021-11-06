@@ -5,7 +5,7 @@ using MetricsProxy.Application.Peripherals.Ef;
 
 namespace MetricsProxy.Application.Peripherals
 {
-    internal static class EfCoreKpiRepositoryExtensions
+    public static class EfCoreKpiRepositoryExtensions
     {
         public static KpiModel Map(this Metric metric) => new KpiModel(
             metric.SourceName,

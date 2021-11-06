@@ -15,7 +15,10 @@ namespace MetricsProxy.Application.Domain
         private readonly IDataSinkReportingService _reportingService;
         private readonly IKpiRepository _kpiRepository;
 
-        public MetricsManagementService(IDataSourceQueryService queryService, IDataSinkReportingService reportingService, IKpiRepository kpiRepository)
+        public MetricsManagementService(
+            IDataSourceQueryService queryService, 
+            IDataSinkReportingService reportingService, 
+            IKpiRepository kpiRepository)
         {
             _queryService = queryService;
             _reportingService = reportingService;
@@ -25,7 +28,9 @@ namespace MetricsProxy.Application.Domain
         {
             await QueryAndStoreData();
             var dataToReport = (await FetchDataToReport()).ToList();
-            await ReportAndUpdateStoredData(dataToReport);
+
+            if(dataToReport.Any())
+                await ReportAndUpdateStoredData(dataToReport);
         }
 
         private async Task ReportAndUpdateStoredData(List<KpiToReport> dataToReport)
@@ -35,7 +40,8 @@ namespace MetricsProxy.Application.Domain
                 .GroupBy(x => x.Kpi)
                 .Select(MapKpiModel);
 
-            await _kpiRepository.Upsert(models);
+            if(models.Any())
+                await _kpiRepository.Upsert(models);
         }
 
         private static KpiModel MapKpiModel(IGrouping<Kpi, ReportedKpi> x)
@@ -84,7 +90,8 @@ namespace MetricsProxy.Application.Domain
                 .Select(x => new KpiModel(x.Source, x.Key, x.UnitOrValue, x.CreatedOn ?? DateTime.Now, null))
                 .ToList();
 
-            await _kpiRepository.Upsert(data);
+            if(data.Any())
+                await _kpiRepository.Upsert(data);
         }
     }
 }
