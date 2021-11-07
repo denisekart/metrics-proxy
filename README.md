@@ -61,7 +61,7 @@ This is an annotated example of `appSettings.Personal.json`:
 
 After you have configured your application, run it using `powershell`:
 
-```powershhell
+```pwsh
 .\build.ps1 -Run
 ```
 
@@ -75,7 +75,7 @@ Modify application settings using environment file (`.env`) of modify the `envir
 
 This is an example of `.env` file:
 
-```
+```cmd
 DATABOX_TOKEN=111111111
 GITHUB_ACCESSTOKEN=11111111
 FACEBOOK_APPID=11111111
@@ -84,10 +84,63 @@ FACEBOOK_APPSECRET=111111111
 
 After you have configured the environment variables, you can run the application:
 
-```
+```pwsh
 docker-compose up -d
 ```
 
 After deployed, visit: `http://localhost:5050`
 
 > Note: Make sure you have docker installed and are using `linux` containers.
+
+
+## How to test
+
+You can run tests by executing the following command:
+
+```pwsh
+.\build.ps1 -Test
+```
+
+You can run test code coverage analysis by running:
+
+```pwsh
+.\build.ps1 -Cover
+```
+
+The resulting report will look like the following:
+
+```txt
+Summary
+  Generated on: 7. 11. 2021 - 14:39:10
+  Parser: MultiReportParser (29x CoberturaParser)
+  Assemblies: 2
+  Classes: 17
+  Files: 12
+  Line coverage: 95.5%
+  Covered lines: 303
+  Uncovered lines: 14
+  Coverable lines: 317
+  Total lines: 556
+
+MetricsProxy.Application                                                 95.5%
+  MetricsProxy.Application.Application.DefaultBackgroundServiceTracker  100.0%
+  MetricsProxy.Application.Domain.DataSinkReportingService              100.0%
+  MetricsProxy.Application.Domain.DataSourceQueryService                100.0%
+  MetricsProxy.Application.Domain.MetricsManagementService               93.6%
+  MetricsProxy.Application.Models.FailedStat                            100.0%
+  MetricsProxy.Application.Models.KpiModel                              100.0%
+  MetricsProxy.Application.Models.KpiStats                              100.0%
+  MetricsProxy.Application.Models.KpiToReport                           100.0%
+  MetricsProxy.Application.Models.ReportedKpi                           100.0%
+  MetricsProxy.Application.Models.ReportTargetModel                     100.0%
+  MetricsProxy.Application.Peripherals.Ef.Metric                        100.0%
+  MetricsProxy.Application.Peripherals.Ef.MetricsContext                 71.4%
+  MetricsProxy.Application.Peripherals.Ef.MetricTarget                   71.4%
+  MetricsProxy.Application.Peripherals.EfCoreKpiRepository              100.0%
+  MetricsProxy.Application.Peripherals.EfCoreKpiRepositoryExtensions     88.0%
+  MetricsProxy.Application.Peripherals.InMemoryKpiRepository            100.0%
+
+MetricsProxy.Contracts                                                  100.0%
+  MetricsProxy.Contracts.Kpi                                            100.0%
+
+```
