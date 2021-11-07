@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using MetricsProxy.Application.Contracts;
+﻿using MetricsProxy.Application.Contracts;
 using MetricsProxy.Application.Models;
 using MetricsProxy.Application.Peripherals.Ef;
 using MetricsProxy.Contracts;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MetricsProxy.Application.Peripherals
 {
@@ -27,14 +27,14 @@ namespace MetricsProxy.Application.Peripherals
                 .Union(
                     from target in _context.MetricTargets
                         .Include(x => x.Metric)
-                        .ThenInclude(x=>x.MetricTargets)
+                        .ThenInclude(x => x.MetricTargets)
                     where availableSinks.Contains(target.SinkName) || includeKpisWhereReportingFailed &&
                         availableSinks.Contains(target.SinkName) && target.Status == EfReportStatus.Failure
                     select target.Metric)
                 .AsEnumerable()
                 .Distinct()
                 .Select(x => x.Map());
-            
+
             return metrics;
         }
 
@@ -44,8 +44,8 @@ namespace MetricsProxy.Application.Peripherals
             var keys = modelsList.Select(x => x.Key).ToList();
 
             var applicableMetricsToRemove = (from metric in _context.Metrics.Include(x => x.MetricTargets)
-                    where keys.Contains(metric.Key)
-                    select metric)
+                                             where keys.Contains(metric.Key)
+                                             select metric)
                 .AsEnumerable()
                 .Where(e => modelsList.Any(x =>
                     x.Key == e.Key && x.SourceName == e.SourceName && x.ReceivedOn == e.ReceivedOn));

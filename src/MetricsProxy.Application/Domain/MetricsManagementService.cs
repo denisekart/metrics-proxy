@@ -1,11 +1,11 @@
-﻿using System;
+﻿using MetricsProxy.Application.Contracts;
+using MetricsProxy.Application.Models;
+using MetricsProxy.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MetricsProxy.Application.Contracts;
-using MetricsProxy.Application.Models;
-using MetricsProxy.Contracts;
 
 namespace MetricsProxy.Application.Domain
 {
@@ -16,20 +16,21 @@ namespace MetricsProxy.Application.Domain
         private readonly IKpiRepository _kpiRepository;
 
         public MetricsManagementService(
-            IDataSourceQueryService queryService, 
-            IDataSinkReportingService reportingService, 
+            IDataSourceQueryService queryService,
+            IDataSinkReportingService reportingService,
             IKpiRepository kpiRepository)
         {
             _queryService = queryService;
             _reportingService = reportingService;
             _kpiRepository = kpiRepository;
         }
+
         public async Task QueryAndReport(CancellationToken cancellationToken)
         {
             await QueryAndStoreData();
             var dataToReport = (await FetchDataToReport()).ToList();
 
-            if(dataToReport.Any())
+            if (dataToReport.Any())
                 await ReportAndUpdateStoredData(dataToReport);
         }
 
@@ -40,7 +41,7 @@ namespace MetricsProxy.Application.Domain
                 .GroupBy(x => x.Kpi)
                 .Select(MapKpiModel);
 
-            if(models.Any())
+            if (models.Any())
                 await _kpiRepository.Upsert(models);
         }
 
@@ -90,7 +91,7 @@ namespace MetricsProxy.Application.Domain
                 .Select(x => new KpiModel(x.Source, x.Key, x.UnitOrValue, x.CreatedOn ?? DateTime.Now, null))
                 .ToList();
 
-            if(data.Any())
+            if (data.Any())
                 await _kpiRepository.Upsert(data);
         }
     }

@@ -1,15 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using MetricsProxy.Contracts;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using MetricsProxy.Contracts;
 
 namespace DataSource.Multiple
 {
     public class FacebookDataSource : IDataSource
     {
-        public record AuthReponse(string access_token);
+        public record AuthResponse(string access_token);
         public record DataResponse(object[] data);
 
         private readonly IConfigurationAccessor<FacebookDataSource> _configuration;
@@ -71,7 +71,7 @@ namespace DataSource.Multiple
             };
             var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-            var responseModel = await response.Content.ReadFromJsonAsync<AuthReponse>();
+            var responseModel = await response.Content.ReadFromJsonAsync<AuthResponse>();
             return responseModel.access_token;
         }
     }

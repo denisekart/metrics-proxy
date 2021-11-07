@@ -22,7 +22,7 @@ namespace MetricsProxy.Web.Services
             }
             else
             {
-                _sectionValue = string.Empty;
+                _sectionValue = ttype.Name;
             }
         }
         public T Get<T>(TService instance, string path) where T: class, new()

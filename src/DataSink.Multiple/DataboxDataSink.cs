@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MetricsProxy.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -7,7 +8,6 @@ using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using MetricsProxy.Contracts;
 
 namespace DataSink.Multiple
 {
@@ -38,13 +38,11 @@ namespace DataSink.Multiple
 
             // Databox API: https://developers.databox.com/send-data/
             var serializedData = GenerateRequestBody(items);
-
             var request = GenerateRequest(token, serializedData);
-
             var response = await client.SendAsync(request);
+
             response.EnsureSuccessStatusCode();
             var responseModel = await response.Content.ReadFromJsonAsync<GenericApiResponse>();
-
             if (!responseModel.status.Equals("ok", StringComparison.OrdinalIgnoreCase))
             {
                 throw new Exception($"Databox data sink failed to process the data with error: {responseModel.message}");

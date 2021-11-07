@@ -20,11 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DataSource\" />
-    <Folder Include="DataSink\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\MetricsProxy.Application\MetricsProxy.Application.csproj" />
   </ItemGroup>
 

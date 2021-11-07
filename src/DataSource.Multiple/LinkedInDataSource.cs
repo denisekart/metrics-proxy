@@ -1,10 +1,10 @@
-﻿using System;
+﻿using MetricsProxy.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using MetricsProxy.Contracts;
 
 namespace DataSource.Multiple
 {
@@ -17,7 +17,7 @@ namespace DataSource.Multiple
     [Obsolete]
     class LinkedInDataSource : IDataSource
     {
-        record LinkedInAuthReponse(string access_token);
+        record LinkedInAuthResponse(string access_token);
 
         private readonly IConfigurationAccessor<LinkedInDataSource> _configuration;
         private readonly IHttpClientFactory _clientFactory;
@@ -27,11 +27,13 @@ namespace DataSource.Multiple
             _configuration = configuration;
             _clientFactory = clientFactory;
         }
+
         public string Name => "LinkedIn";
+
         public async Task<IEnumerable<Kpi>> Query()
         {
             var accessToken = await ExchangeClientCredentialsForAccessToken();
-            
+
             throw new NotImplementedException();
         }
 
@@ -55,7 +57,7 @@ namespace DataSource.Multiple
             };
             var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-            var responseModel = await response.Content.ReadFromJsonAsync<LinkedInAuthReponse>();
+            var responseModel = await response.Content.ReadFromJsonAsync<LinkedInAuthResponse>();
             return responseModel.access_token;
         }
     }

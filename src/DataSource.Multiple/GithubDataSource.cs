@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using MetricsProxy.Contracts;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using MetricsProxy.Contracts;
 
 namespace DataSource.Multiple
 {
@@ -19,9 +19,9 @@ namespace DataSource.Multiple
             _configuration = configuration;
             _clientFactory = clientFactory;
         }
-        
+
         public string Name => "GitHub";
-        
+
         public async Task<IEnumerable<Kpi>> Query()
         {
             var accessToken = _configuration.Get<Credentials>(this).AccessToken;

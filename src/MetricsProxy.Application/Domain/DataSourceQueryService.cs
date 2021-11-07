@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MetricsProxy.Application.Contracts;
+﻿using MetricsProxy.Application.Contracts;
 using MetricsProxy.Contracts;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MetricsProxy.Application.Domain
 {

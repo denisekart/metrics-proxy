@@ -1,14 +1,9 @@
-using System.Collections.Generic;
-using System.Linq;
 using DataSink.Multiple;
 using DataSource.Multiple;
 using MetricsProxy.Application.Peripherals.Ef;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -34,6 +29,7 @@ namespace MetricsProxy.Web
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "MetricsProxy.Web", Version = "v1" });
             });
 
+            // configure all metrics proxy services
             services
                 .AddCoreMetricsProxyServices(Configuration)
                 .AddExternalServicesConfigurationFactory()
@@ -51,12 +47,18 @@ namespace MetricsProxy.Web
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MetricsProxy.Web v1"));
             }
 
+            // Configure entity framework based on configurations
+            // WARNING: Please don't ever use this code in a production system!!
             if (Configuration.UseEfCoreDatabase())
             {
                 using var efScope = app.ApplicationServices.CreateScope();
                 var db = efScope.ServiceProvider.GetRequiredService<MetricsContext>();
+
+                // Delete old instance of the database when configured in that way
                 if (Configuration.UseEfCoreDatabaseReset())
                     db.Database.EnsureDeleted();
+
+                // always ensure that the database exists
                 db.Database.EnsureCreated();
             }
 
@@ -68,6 +70,7 @@ namespace MetricsProxy.Web
                 endpoints.MapControllers();
             });
 
+            // at this point, we missed all of our middlewares. Just write something funny.
             app.Run(ctx => ctx.Response.WriteAsync("Whoops, you missed an endpoint! <br/> See '/README.md' on what to do next. or visit the /swagger endpoint for API documentation."));
         }
     }

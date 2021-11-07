@@ -26,7 +26,6 @@ namespace MetricsProxy.Web
             return configuration.GetValue<string>("DatabaseProvider").Equals("EfCore_Reset", StringComparison.OrdinalIgnoreCase);
         }
 
-
         public static bool UseInMemoryDatabase(this IConfiguration configuration)
         {
             return configuration.GetValue<string>("DatabaseProvider") switch
@@ -68,6 +67,7 @@ namespace MetricsProxy.Web
 
             return services;
         }
+        
         public static IServiceCollection AddExternalServicesConfigurationFactory(this IServiceCollection services)
         {
             services.AddSingleton(typeof(IConfigurationAccessor<>), typeof(DefaultWebConfigurationAccessor<>));

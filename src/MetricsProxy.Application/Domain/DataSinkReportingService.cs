@@ -1,10 +1,10 @@
-﻿using System;
+﻿using MetricsProxy.Application.Contracts;
+using MetricsProxy.Application.Models;
+using MetricsProxy.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MetricsProxy.Application.Contracts;
-using MetricsProxy.Application.Models;
-using MetricsProxy.Contracts;
 
 namespace MetricsProxy.Application.Domain
 {

@@ -1,11 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
-using MetricsProxy.Application.Contracts;
+﻿using MetricsProxy.Application.Contracts;
 using MetricsProxy.Application.Models;
 using MetricsProxy.Contracts;
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MetricsProxy.Application.Peripherals
 {

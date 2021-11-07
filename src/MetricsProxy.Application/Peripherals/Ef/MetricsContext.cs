@@ -13,6 +13,9 @@ namespace MetricsProxy.Application.Peripherals.Ef
             
         }
 
+        /// <summary>
+        /// The path of the sqlite database file (OS invariant)
+        /// </summary>
         public static string DbPath => $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.Create)}{System.IO.Path.DirectorySeparatorChar}metricsProxy.db";
     }
 }

@@ -13,6 +13,11 @@ namespace MetricsProxy.Web.Controllers
     [Route("[controller]")]
     public class StatusController : ControllerBase
     {
+        /// <summary>
+        /// The status of the system
+        /// </summary>
+        /// <param name="BackgroundServiceStatus">Background service state</param>
+        /// <param name="ReportingStatistics">The statistics based on the reported KPIs</param>
         public record Status(string BackgroundServiceStatus, KpiStats ReportingStatistics);
         
         private readonly ILogger<StatusController> _logger;
@@ -29,7 +34,7 @@ namespace MetricsProxy.Web.Controllers
         [HttpGet]
         public async Task<Status> GetStatus()
         {
-            return new Status(_backgroundServiceTracker.Query(), await _kpiRepository.GetKpiStats());
+            return new (_backgroundServiceTracker.Query(), await _kpiRepository.GetKpiStats());
         }
     }
 }
