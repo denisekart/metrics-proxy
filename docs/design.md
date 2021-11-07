@@ -36,7 +36,7 @@ A method `report` will commit the data that is provided in the input to the data
 
 ## The API endpoint
 
-TBD
+Thi api endpoint `/status` will be used to report the status of the system.
 
 ## Data sources
 
@@ -101,5 +101,6 @@ DataManager > New Connection > Additional ways to connect > Rest API > Create To
 Copy "Token"
 ```
 
+### Randomly Failing
 
-
+Apparently it's hard to crash databox. This sink will fail at random. The failure rate will be measured in percent. The failure rate will be set in configuration
