@@ -65,6 +65,8 @@ After you have configured your application, run it using `powershell`:
 .\build.ps1 -Run
 ```
 
+After deployed, visit `https://localhost:5001`.
+
 > Note: No need to build the application. No need to have the tooling (net5.0, global tools, etc.) installed. The bootstrapper will do this for you.
 
 ### Via docker
@@ -86,5 +88,6 @@ After you have configured the environment variables, you can run the application
 docker-compose up -d
 ```
 
-> Note: Make sure you have docker installed and are using `linux` containers.
+After deployed, visit: `http://localhost:5050`
 
+> Note: Make sure you have docker installed and are using `linux` containers.
